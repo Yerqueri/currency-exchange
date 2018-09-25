@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.learn.ayush.models.ExchangeValue;
+import com.learn.ayush.services.ExchangeService;
 
 @RestController
 public class CurrencyExchangeCintroller {
@@ -16,9 +17,12 @@ public class CurrencyExchangeCintroller {
 	@Autowired
 	private Environment env;
 	
+	@Autowired
+	private ExchangeService exchangeService;
+	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValue retrieveExchangeValue(@PathVariable String from,@PathVariable String to){
-		ExchangeValue eval =new ExchangeValue(1L,from,to,BigDecimal.valueOf(0.65));
+		ExchangeValue eval =exchangeService.getConversionRates(from,to);
 		eval.setPort(Integer.parseInt(env.getProperty("local.server.port")));
 		return eval;
 	}

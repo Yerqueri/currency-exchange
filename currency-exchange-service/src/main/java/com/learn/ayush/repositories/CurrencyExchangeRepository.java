@@ -8,4 +8,6 @@ import com.learn.ayush.models.ExchangeValue;
 @Repository
 public interface CurrencyExchangeRepository extends JpaRepository<ExchangeValue, Long>{
 
+	ExchangeValue findByFromAndTo(String from, String to);
+	
 }

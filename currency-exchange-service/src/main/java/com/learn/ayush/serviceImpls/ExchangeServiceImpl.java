@@ -1,8 +1,5 @@
 package com.learn.ayush.serviceImpls;
 
-import javax.persistence.EntityManager;
-
-import org.hibernate.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

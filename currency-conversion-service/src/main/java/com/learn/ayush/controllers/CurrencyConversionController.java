@@ -23,4 +23,11 @@ public class CurrencyConversionController {
 		return new ConversionValue(1L, from, to, conversionFactor,quantity,convertedValue);
 	}
 	
+	@GetMapping(path="currency-convertor-feign/from/{from}/to/{to}/quantity/{quantity}")
+	public ConversionValue convertCurrencyViaProxy(@PathVariable String from,@PathVariable String to,@PathVariable BigDecimal quantity) {
+		BigDecimal conversionFactor =conversionService.fetchConversionFactorViaFeignClient(from,to);
+		BigDecimal convertedValue = conversionFactor.multiply(quantity);
+		return new ConversionValue(1L, from, to, conversionFactor,quantity,convertedValue);
+	}
+	
 }

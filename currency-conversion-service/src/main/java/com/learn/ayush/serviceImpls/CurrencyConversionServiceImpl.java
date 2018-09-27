@@ -39,8 +39,10 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService{
 	public BigDecimal fetchConversionFactorViaFeignClient(String from, String to) {
 		try {
 			ExchangeValue exchangeValue = feignProxy.retrieveExchangeValue(from, to);
+			System.out.println("currency-exchange-service instance: "+exchangeValue.getPort());
 			return exchangeValue.getConversionValue();
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new ResourceNotFoundException("Conversion method from "+from+" to "+to+" not found");
 		}
 	}

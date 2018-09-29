@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService{
 	
 	@Autowired
 	private CurrencyExchangeServiceProxy feignProxy;
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public BigDecimal fetchConversionFactor(String from, String to) {
@@ -39,7 +43,7 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService{
 	public BigDecimal fetchConversionFactorViaFeignClient(String from, String to) {
 		try {
 			ExchangeValue exchangeValue = feignProxy.retrieveExchangeValue(from, to);
-			System.out.println("currency-exchange-service instance: "+exchangeValue.getPort());
+			logger.info("currency-exchange-service instance: {}",exchangeValue.getPort());
 			return exchangeValue.getConversionValue();
 		}catch (Exception e) {
 			e.printStackTrace();
